@@ -1,39 +1,20 @@
-﻿Класс `BooksCollector` содержит:
-
-\- Словарь `books\_genre`  `Название книги: Жанр книги`.
-
-\- Список `favorites` избранные книги.
-
-\- Список `genre` доступные жанры.
-
-\- Список `genre\_age\_rating`жанры с возрастным рейтингом.
-
-\- Набор методов для работы со словарем `books\_genre` и списком `favorites`:
-
-`    `- `add\_new\_book` — добавляет новую книгу в словарь без указания жанра.
-
-`    `- `set\_book\_genre` — устанавливает жанр книги
-
-`    `- `get\_book\_genre`— выводит жанр книги по её имени.
-
-`    `- `get\_books\_with\_specific\_genre`— выводит список книг с определённым жанром.
-
-`    `- `get\_books\_genre`— выводит текущий словарь `books\_genre`.
-
-`    `- `get\_books\_for\_children` — возвращает книги, которые подходят детям.
-
-`    `- `add\_book\_in\_favorites` — добавляет книгу в избранное.
-
-`    `- `delete\_book\_from\_favorites` — удаляет книгу из избранного.
-
-`    `- `get\_list\_of\_favorites\_books` — получает список избранных книг.
+# qa_python
+# unit tests for books collector
+Проверки спроектированны на курсе "Автоматизатор тестирования на Python"
 
 Тесты  находятся в файле [tests.py](tests.py)
 
-\### Запустить все тесты
+Запустить все тесты через терминал: pytest tests.py -v
 
-\```bash
-
-pytest -v test 
-
-\```
+Тесты, в некоторых из которых, реализована параметризация:
+  1. test_add_new_book_add_positive_name_books
+  2. test_add_new_book_add_negative_name_books
+  3. test_add_new_book_add_same_name_books
+  4. test_set_book_genre_add_genre_book_positive_result
+  5. test_set_book_genre_add_genre_is_not_list
+  6. test_get_book_genre_for_name_positive_result
+  7. test_get_books_with_specific_genre_get_book_name_with_specific_genre
+  8. test_get_books_for_children_all_approved_books
+  9. test_add_book_in_favorites_add_book
+  10. test_add_book_in_favorites_add_same_name_book
+  11. test_delete_book_from_favorites_remove_book

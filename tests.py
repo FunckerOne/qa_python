@@ -28,25 +28,28 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Фильм в жанре комедии')
         collector.set_book_genre('Фильм в жанре комедии', 'Комедии')
-        assert collector.books_genre.get('Фильм в жанре комедии') == 'Комедии'
+        assert collector.get_books_genre() == {'Фильм в жанре комедии': 'Комедии'}
 
     def test_set_book_genre_add_genre_is_not_list(self):
         collector = BooksCollector()
         collector.add_new_book('Фильм в жанре комедии')
         collector.set_book_genre('Фильм в жанре комедии', 'Боевики')
-        assert collector.books_genre.get('Фильм в жанре комедии') == ''
+        assert collector.get_books_genre() == {'Фильм в жанре комедии': ''}
 
     def test_get_book_genre_for_name_positive_result(self):
         collector = BooksCollector()
         collector.add_new_book('Фильм в жанре комедии')
         collector.set_book_genre('Фильм в жанре комедии', 'Комедии')
-        assert collector.books_genre.get('Фильм в жанре комедии') == 'Комедии'
+        assert collector.get_books_genre() == {'Фильм в жанре комедии': 'Комедии'}
 
-    def test_get_books_with_specific_genre_get_book_name_with_specific_genre(self):
+    @pytest.mark.parametrize('name, genre', [('Фильм в жанре комедии', 'Комедии'),
+                                             ('Фильм в жанре мультфильмы', 'Мультфильмы'),
+                                             ('Фильм в жанре фантастике', 'Фантастика')])
+    def test_get_books_with_specific_genre_get_book_name_with_specific_genre(self, name, genre):
         collector = BooksCollector()
-        collector.books_genre = {'Фильм в жанре комедии': 'Комедии', 'Фильм в жанре мультфильмы': 'Мультфильмы',
-                                 'Фильм в жанре фантастике': 'Фантастика'}
-        assert len(collector.get_books_with_specific_genre('Мультфильмы')) == 1
+        collector.add_new_book(name)
+        collector.set_book_genre(name, genre)
+        assert collector.get_books_with_specific_genre(genre) == [name]
 
     def test_get_books_for_children_all_approved_books(self):
         collector = BooksCollector()
@@ -59,7 +62,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Фильм в жанре фантастике')
         collector.add_book_in_favorites('Фильм в жанре фантастике')
-        assert len(collector.get_list_of_favorites_books()) == 1 and collector.favorites[0] == 'Фильм в жанре фантастике'
+        assert len(collector.get_list_of_favorites_books()) == 1 and collector.get_list_of_favorites_books() == ['Фильм в жанре фантастике']
 
     def test_add_book_in_favorites_add_same_name_book(self):
         collector = BooksCollector()
@@ -73,4 +76,4 @@ class TestBooksCollector:
         collector.add_new_book('Фильм в жанре мультфильмы')
         collector.add_book_in_favorites('Фильм в жанре мультфильмы')
         collector.delete_book_from_favorites('Фильм в жанре мультфильмы')
-        assert len(collector.favorites) == 0
+        assert len(collector.get_list_of_favorites_books()) == 0
